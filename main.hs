@@ -12,17 +12,17 @@ data LispVal = Atom String
              | String String
              | Bool Bool
 
-showVal :: LispVal -> String
-showVal (String contents) = "\"" ++ contents ++ "\""
-showVal (Atom name) = name
-showVal (Number contents) = show contents
-showVal (Bool True) = "#t"
-showVal (Bool False) = "#f"
-showVal (List contents) = "(" ++ unwordsList contents ++ ")"
-showVal (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ showVal tail ++ ")"
+instance Show LispVal where
+    show (String contents) = "\"" ++ contents ++ "\""
+    show (Atom name) = name
+    show (Number contents) = show contents
+    show (Bool True) = "#t"
+    show (Bool False) = "#f"
+    show (List contents) = "(" ++ unwordsList contents ++ ")"
+    show (DottedList head tail) = "(" ++ unwordsList head ++ " . " ++ show tail ++ ")"
 
 unwordsList :: [LispVal] -> String
-unwordsList = unwords . map showVal
+unwordsList = unwords . map show
 
 main :: IO ()
 main = do
@@ -34,7 +34,7 @@ main = do
 readExpr :: String -> String
 readExpr input = case parse parseExpr "lisp" input of
     Left  err -> "No match: \n" ++ show err
-    Right val -> "Found value: \n" ++ showVal val
+    Right val -> "Found value: \n" ++ show val
 
 parser = spaces >> symbol
 
