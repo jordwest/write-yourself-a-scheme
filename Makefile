@@ -10,4 +10,4 @@ clean:
 	rm ./*.hi
 
 run: build/main
-	./build/main "%"
+	./build/main "(some list .  (tail is another      list \"with    a string\"))"
