@@ -8,3 +8,6 @@ clean:
 	rm -rf build
 	rm ./*.o
 	rm ./*.hi
+
+run: build/main
+	./build/main Rocko
