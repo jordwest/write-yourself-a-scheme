@@ -10,4 +10,4 @@ clean:
 	rm ./*.hi
 
 run: build/main
-	./build/main Rocko
+	./build/main "%"
