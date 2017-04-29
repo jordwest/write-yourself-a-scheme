@@ -41,10 +41,16 @@ parseAtom = do
         "#f" -> Bool False
         _    -> Atom atom
 
+parseEscapedChars :: Parser Char
+parseEscapedChars = do
+    char '\\'
+    x <- oneOf "\\\""
+    return x
+
 parseString :: Parser LispVal
 parseString = do
     char '"'
-    x <- many (noneOf "\"")
+    x <- many $ parseEscapedChars <|> (noneOf "\\\"")
     char '"'
     return $ String x
 
