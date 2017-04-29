@@ -25,16 +25,20 @@ unwordsList :: [LispVal] -> String
 unwordsList = unwords . map show
 
 main :: IO ()
-main = do
-    (expr:_) <- getArgs
-    putStrLn (readExpr expr)
+main = getArgs >>= (print . eval . readExpr . head)
 
 -- https://en.wikibooks.org/wiki/Write_Yourself_a_Scheme_in_48_Hours/Parsing
 
-readExpr :: String -> String
+readExpr :: String -> LispVal
 readExpr input = case parse parseExpr "lisp" input of
-    Left  err -> "No match: \n" ++ show err
-    Right val -> "Found value: \n" ++ show val
+    Left  err -> String ("No match: \n" ++ show err)
+    Right val -> val
+
+eval :: LispVal -> LispVal
+eval val@(String _) = val
+eval val@(Number _) = val
+eval val@(Bool _) = val
+eval (List [Atom "quote", val]) = val
 
 parser = spaces >> symbol
 
