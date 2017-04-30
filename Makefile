@@ -1,8 +1,8 @@
 .PHONY: clean
 
-build/main: main.hs
+build/main: evaluator.hs parser.hs main.hs
 	mkdir -p build
-	(cd build/ && stack ghc -- -o main --make ../main.hs)
+	stack ghc -- -o build/main --make main.hs
 
 clean:
 	rm -rf build
