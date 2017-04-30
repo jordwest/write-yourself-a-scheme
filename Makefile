@@ -10,4 +10,4 @@ clean:
 	rm ./*.hi
 
 run: build/main
-	./build/main "(+ 100 18)"
+	./build/main "(+ 100 18 2)"
